@@ -69,7 +69,11 @@
   "license": "MIT",
   "scripts": {
     "test": "tsc -p tsconfig.cjs.json && mocha",
-    "prepack": "just install && just build"
+    "prepack": "just install && just build",
+    "build:esm": "mkdir -p esm && npx tsc -p tsconfig.esm.json && echo '{\"type\":\"module\"}' > esm/package.json",
+    "build:cjs": "mkdir -p cjs && npx tsc -p tsconfig.cjs.json && echo '{\"type\":\"commonjs\"}' > cjs/package.json",
+    "build": "yarn build:esm && yarn build:cjs",
+    "postinstall": "yarn build"
   },
   "exports": {
     "types": "./types/index.d.ts",
